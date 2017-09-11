@@ -6,40 +6,72 @@
     <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    <style type="text/css">
+      .hidden { display:none; }
+    </style>
   </head>
-  <body>
-    <div id="mountNode"></div>
+<body>
+  <div id="mountNode"></div>
+  <script type="text/babel">
+  var mountNode = document.getElementById('mountNode');
+  
+  class AddComponent extends React {
+    constructor(){
+      super();
+      this.update = this.update.bind(this);
+      this.submit ) this.submit.bind(this);
+    }
+    update(){
+     this.setState({query : this.input.value});
+    }
+    submit(e){
+    
+    e.preventDefault();
+    this.props.onSubmit({task : this.props.name + ' ' +this.input.value});
+    this.input.value = "";
 
-    <script type="text/babel">
-      var mountNode = document.getElementById('mountNode');
+    }
 
-      class MyComponent extends React.Component {
-        constructor(){
-          super();
-          this.state = {name : "nassimos",query: ""};
-          this.changeName = this.changeName.bind(this);
-          this.update = this.update.bind(this);
-        }
-        changeName(){
-          this.setState({name : "hobi"});
-        }
-        update(){
-          this.setState({query: this.input.value});
-        }
-        render() {
-          return (
-            <div>
-            <h1 style = {{color: this.props.color ? this.props.color : 'red'}}
-            onClick = {this.changeName}>
-            Hello, {this.state.name}!</h1>
-            <input ref={(input)=> this.input = input} onChange={this.update} />
-            <p>{this.state.query}</p>
-            </div>
-          );
-        }
-      }
+    render() {
+      return (
+        <form onSubmit= {this.submit}>
+          <h2>Assigner une tâche : </h2>
+          <input ref={(input)=>this.input = input} onChange = {this.update} placeholder = "doit faire ..."/>
+          <button>Ajouter</button>
+        </form>
+      );
+    }
+    
+  }
 
-      ReactDOM.render(<MyComponent color = "blue" />, mountNode);
-    </script>
-  </body>
-</html>
+  class MainComponent extends React.Component {
+    constructor(){
+      super();
+      this.state = {actual : "Julien", users:["Julien", "Christophe", "Roby"],items:[]};
+      this.changName = this.changName.bind(this);
+      this.addItem = this.addItem.bind(this);
+    }
+    changName(key){
+    this.setState({actual : this.state.users[key]});
+    }
+    addItem(item){
+      this.setState({items: this.state.items.concat([item]);
+      })
+    }
+
+    render() {
+      return (
+        <div>
+          <h1 style = {{color : this.props.color ? this.props.color : 'red'}}>
+          Tâches pour {this.state.actual} !
+          <h2>Choisir un membre :</h2>
+          
+          
+          </h1>
+        </div>
+      );
+    }
+  }
+   
+  </script>
+</body>
